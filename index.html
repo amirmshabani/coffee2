@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>کافه رُزا | Café Rosa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2c1810;
+            --secondary: #d4a574;
+            --accent: #8b4513;
+            --light: #fdf8f0;
+            --card-bg: #ffffff;
+            --text-dark: #1a1a1a;
+            --text-light: #666;
+            --shadow: 0 10px 40px rgba(0,0,0,0.08);
+            --shadow-hover: 0 20px 60px rgba(0,0,0,0.15);
+            --radius: 20px;
+        }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: var(--light);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* ============ HEADER ============ */
+        .header {
+            background: linear-gradient(135deg, #1a0f0a 0%, #3d2317 50%, #2c1810 100%);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+        }
+
+        .logo-text {
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        .logo-text span {
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #ccc;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* ============ HERO ============ */
+        .hero {
+            background: linear-gradient(135deg, #1a0f0a 0%, #2c1810 100%);
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(212,165,116,0.1) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .hero h1 {
+            color: #fff;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .hero h1 span {
+            color: var(--secondary);
+        }
+
+        .hero p {
+            color: #aaa;
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            line-height: 1.8;
+        }
+
+        /* ============ CATEGORIES ============ */
+        .categories {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 1rem 2.5rem;
+            border: 2px solid var(--secondary);
+            background: transparent;
+            color: var(--primary);
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab-btn:hover {
+            background: var(--secondary);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(212,165,116,0.3);
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(44,24,16,0.3);
+        }
+
+        .tab-btn .tab-icon {
+            font-size: 1.3rem;
+        }
+
+        /* ============ PRODUCTS GRID ============ */
+        .products-container {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .products-container.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .section-title h2 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            color: var(--primary);
+            font-weight: 800;
+        }
+
+        .section-title p {
+            color: var(--text-light);
+            margin-top: 0.5rem;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* ============ PRODUCT CARD ============ */
+        .product-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .card-image img {
+            transform: scale(1.08);
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(44,24,16,0.9);
+            color: #fff;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            backdrop-filter: blur(5px);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-content h3 {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+        }
+
+        .ingredients {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 1rem;
+        }
+
+        .ingredient-tag {
+            background: var(--light);
+            color: var(--accent);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border: 1px solid rgba(139,69,19,0.15);
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .price {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--accent);
+        }
+
+        .price span {
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: var(--text-light);
+        }
+
+        .add-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .add-btn:hover {
+            background: var(--secondary);
+            transform: rotate(90deg);
+        }
+
+        /* ============ FOOTER ============ */
+        .footer {
+            background: var(--primary);
+            color: #ccc;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer p {
+            font-size: 0.9rem;
+        }
+
+        .footer .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .footer .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid #555;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ccc;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .footer .social-links a:hover {
+            background: var(--secondary);
+            border-color: var(--secondary);
+            color: #fff;
+        }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--primary);
+                flex-direction: column;
+                padding: 1.5rem 2rem;
+                gap: 1rem;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero {
+                padding: 3rem 1.5rem;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .category-tabs {
+                gap: 0.7rem;
+            }
+
+            .tab-btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.95rem;
+            }
+
+            .card-image {
+                height: 180px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 0.8rem 1rem;
+            }
+
+            .logo-text {
+                font-size: 1.2rem;
+            }
+
+            .categories {
+                padding: 0 1rem;
+            }
+
+            .card-content {
+                padding: 1.2rem;
+            }
+
+            .products-grid {
+                gap: 1.2rem;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* ============ SCROLL ANIMATIONS ============ */
+        .product-card {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideUp 0.6s ease forwards;
+        }
+
+        .product-card:nth-child(1) { animation-delay: 0.1s; }
+        .product-card:nth-child(2) { animation-delay: 0.2s; }
+        .product-card:nth-child(3) { animation-delay: 0.3s; }
+        .product-card:nth-child(4) { animation-delay: 0.4s; }
+        .product-card:nth-child(5) { animation-delay: 0.5s; }
+        .product-card:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">☕</div>
+                <div class="logo-text">کافه <span>رُزا</span></div>
+            </div>
+            <nav>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#">خانه</a></li>
+                    <li><a href="#menu">منو</a></li>
+                    <li><a href="#">درباره ما</a></li>
+                    <li><a href="#">تماس</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-menu-btn" id="menuBtn">☰</button>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <h1>به کافه <span>رُزا</span> خوش آمدید</h1>
+        <p>تجربه‌ای متفاوت از طعم‌های اصیل با بهترین مواد اولیه و نوشیدنی‌های دست‌ساز</p>
+    </section>
+
+    <!-- MENU SECTION -->
+    <section class="categories" id="menu">
+        <!-- Category Tabs -->
+        <div class="category-tabs">
+            <button class="tab-btn active" data-category="pizza">
+                <span class="tab-icon">🍕</span>
+                پیتزاها
+            </button>
+            <button class="tab-btn" data-category="drinks">
+                <span class="tab-icon">🥤</span>
+                نوشیدنی‌ها
+            </button>
+        </div>
+
+        <!-- PIZZA SECTION -->
+        <div class="products-container active" id="pizza">
+            <div class="section-title">
+                <h2>🍕 پیتزاهای ما</h2>
+                <p>با بهترین مواد تازه و پنیر مخصوص</p>
+            </div>
+            <div class="products-grid">
+                <!-- Pizza 1 -->
+                <div class="product-card">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&h=300&fit=crop" alt="پیتزا پپرونی">
+                        <span class="card-badge">پرفروش 🔥</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>پیتزا پپرونی</h3>
+                        <div class="ingredients">
+                            <span class="ingredient-tag">پپرونی</span>
+                            <span class="ingredient-tag">پنیر موزارلا</span>
+                            <span class="ingredient-tag">سس مخصوص</span>
+                            <span class="ingredient-tag">فلفل دلمه</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="price">۱۸۵,۰۰۰ <span>تومان</span></div>
+                            <button class="add-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pizza 2 -->
+                <div class="product-card">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400&h=300&fit=crop" alt="پیتزا مارگاریتا">
+                    </div>
+                    <div class="card-content">
+                        <h3>پیتزا مارگاریتا</h3>
+                        <div class="ingredients">
+                            <span class="ingredient-tag">گوجه تازه</span>
+                            <span class="ingredient-tag">ریحان</span>
+                            <span class="ingredient-tag">پنیر موزارلا</span>
+                            <span class="ingredient-tag">روغن زیتون</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="price">۱۵۵,۰۰۰ <span>تومان</span></div>
+                            <button class="add-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pizza 3 -->
+                <div class="product-card">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1513104890138-7c749659a47d?w=400&h=300&fit=crop" alt="پیتزا مخصوص">
+                        <span class="card-badge">ویژه ⭐</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>پیتزا مخصوص شف</h3>
+                        <div class="ingredients">
+                            <span class="ingredient-tag">ژامبون</span>
+                            <span class="ingredient-tag">قارچ</span>
+                            <span class="ingredient-tag">فلفل</span>
+                            <span class="ingredient-tag">زیتون</span>
+                            <span class="ingredient-tag">پنیر دوبل</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="price">۲۱۰,۰۰۰ <span>تومان</span></div>
+                            <button class="add-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pizza 4 -->
+                <div class="product-card">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=400&h=300&fit=crop" alt="پیتزا سبزیجات">
+                    </div>
+                    <div class="card-content">
+                        <h3>پیتزا سبزیجات</h3>
+                        <div class="ingredients">
+                            <span class="ingredient-tag">کدو</span>
+                            <span class="ingredient-tag">بادمجان</span>
+                            <span class="ingredient-tag">گوجه</span>
+                            <span class="ingredient-tag">پیاز</span>
+                            <span class="ingredient-tag">پنیر</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="price">۱۴۵,۰۰۰ <span>تومان</span></div>
+                            <button class="add-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DRINKS SECTION -->
+        <div class="products-container" id="drinks">
+            <div class="section-title">
+                <h2>🥤 نوشیدنی‌های ما</h2>
+                <p>تازه و دست‌ساز با بهترین مواد</p>
+            </div>
+            <div class="products-grid">
+                <!-- Drink 1 -->
+                <div class="product-card">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1461023058943-07fcbe164435?w=400&h=300&fit=crop" alt="موهیتو">
+                        <span class="card-badge">محبوب 💚</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>موهیتو کلاسیک</h3>
+                        <div class="ingredients">
+                            <span class="ingredient-tag">لیمو تازه</span>
+                            <span class="ingredient-tag">نعناع</span>
+                            <span class="ingredient-tag">شکر</span>
+                            <span class="ingredient-tag">آب گازدار</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="price">۸۵,۰۰۰ <span>تومان</span></div>
+                            <button class="add-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Drink 2 -->
+                <div class="product-card">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=400&h=300&fit=crop" alt="اسموتی توت فرنگی">
+                    </div>
+                    <div class="card-content">
+                        <h3>اسموتی توت‌فرنگی</h3>
+                        <div class="ingredients">
+                            <span class="ingredient-tag">توت‌فرنگی</span>
+                            <span class="ingredient-tag">موز</span>
+                            <span class="ingredient-tag">شیر</span>
+                            <span class="ingredient-tag">عسل</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="price">۹۵,۰۰۰ <span>تومان</span></div>
+                            <button class="add-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Drink 3 -->
+                <div class="product-card">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=300&fit=crop" alt="لاته">
+                        <span class="card-badge">داغ 🔥</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>کافه لاته</h3>
+                        <div class="ingredients">
+                            <span class="ingredient-tag">اسپرسو</span>
+                            <span class="ingredient-tag">شیر بخار داده</span>
+                            <span class="ingredient-tag">فوم شیر</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="price">۷۵,۰۰۰ <span>تومان</span></div>
+                            <button class="add-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Drink 4 -->
+                <div class="product-card">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?w=400&h=300&fit=crop" alt="شیک شکلاتی">
+                    </div>
+                    <div class="card-content">
+                        <h3>میلک‌شیک شکلاتی</h3>
+                        <div class="ingredients">
+                            <span class="ingredient-tag">شکلات</span>
+                            <span class="ingredient-tag">بستنی وانیلی</span>
+                            <span class="ingredient-tag">شیر</span>
+                            <span class="ingredient-tag">خامه</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="price">۱۱۰,۰۰۰ <span>تومان</span></div>
+                            <button class="add-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Drink 5 -->
+                <div class="product-card">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&h=300&fit=crop" alt="آب پرتقال">
+                    </div>
+                    <div class="card-content">
+                        <h3>آب پرتقال تازه</h3>
+                        <div class="ingredients">
+                            <span class="ingredient-tag">پرتقال تازه</span>
+                            <span class="ingredient-tag">بدون شکر</span>
+                            <span class="ingredient-tag">طبیعی ۱۰۰٪</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="price">۶۵,۰۰۰ <span>تومان</span></div>
+                            <button class="add-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Drink 6 -->
+                <div class="product-card">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=400&h=300&fit=crop" alt="آیس کافی">
+                        <span class="card-badge">سرد 🧊</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>آیس کافی</h3>
+                        <div class="ingredients">
+                            <span class="ingredient-tag">قهوه سرد</span>
+                            <span class="ingredient-tag">یخ</span>
+                            <span class="ingredient-tag">شیر</span>
+                            <span class="ingredient-tag">کارامل</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="price">۹۰,۰۰۰ <span>تومان</span></div>
+                            <button class="add-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>☕ کافه رُزا — تمامی حقوق محفوظ است © ۱۴۰۵</p>
+        <div class="social-links">
+            <a href="#">📷</a>
+            <a href="#">📱</a>
+            <a href="#">📍</a>
+        </div>
+    </footer>
+
+    <script>
+        // Tab Switching
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const containers = document.querySelectorAll('.products-container');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const category = btn.dataset.category;
+
+                // Remove active from all
+                tabBtns.forEach(b => b.classList.remove('active'));
+                containers.forEach(c => c.classList.remove('active'));
+
+                // Add active to clicked
+                btn.classList.add('active');
+                document.getElementById(category).classList.add('active');
+
+                // Re-trigger animations
+                const cards = document.getElementById(category).querySelectorAll('.product-card');
+                cards.forEach((card, i) => {
+                    card.style.animation = 'none';
+                    card.offsetHeight; // trigger reflow
+                    card.style.animation = `slideUp 0.6s ease forwards ${i * 0.1}s`;
+                });
+            });
+        });
+
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('menuBtn');
+        const navLinks = document.getElementById('navLinks');
+
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('show');
+        });
+
+        // Add to cart animation
+        document.querySelectorAll('.add-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                this.textContent = '✓';
+                this.style.background = '#27ae60';
+                setTimeout(() => {
+                    this.textContent = '+';
+                    this.style.background = '';
+                }, 1500);
+            });
+        });
+    </script>
+
+</body>
+</html>
